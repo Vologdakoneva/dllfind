@@ -17,9 +17,15 @@ library finddll;
 
 uses
   System.SysUtils,
-  System.Classes;
+  System.Classes,
+  FindLauncher in 'FindLauncher.pas',
+  ThreadFind in 'ThreadFind.pas';
 
 {$R *.res}
 
 begin
+
+
+
+
 end.
