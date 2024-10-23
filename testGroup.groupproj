@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{C645850D-BC74-4BDB-9F41-0FFD04C56E81}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="finddll.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="MainLaunch.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="finddll">
+        <MSBuild Projects="finddll.dproj"/>
+    </Target>
+    <Target Name="finddll:Clean">
+        <MSBuild Projects="finddll.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="finddll:Make">
+        <MSBuild Projects="finddll.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="MainLaunch">
+        <MSBuild Projects="MainLaunch.dproj"/>
+    </Target>
+    <Target Name="MainLaunch:Clean">
+        <MSBuild Projects="MainLaunch.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="MainLaunch:Make">
+        <MSBuild Projects="MainLaunch.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="finddll;MainLaunch"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="finddll:Clean;MainLaunch:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="finddll:Make;MainLaunch:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
