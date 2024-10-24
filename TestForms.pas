@@ -4,11 +4,15 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,
+  System.ImageList, Vcl.ImgList;
 
 type
   TForm1 = class(TForm)
     Button1: TButton;
+    FolderSelect: TButtonedEdit;
+    Label1: TLabel;
+    ImageList1: TImageList;
     procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
@@ -23,10 +27,12 @@ implementation
 
 {$R *.dfm}
 
+uses fresultfind;
+
 procedure TForm1.Button1Click(Sender: TObject);
- var libh:integer;
 begin
-   libh :=  LoadLibrary('finddll.dll');
+ Application.CreateForm(TfFindEzec, fFindEzec);
+ fFindEzec.Show();
 
 end;
 

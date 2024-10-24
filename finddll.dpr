@@ -23,9 +23,14 @@ uses
 
 {$R *.res}
 
+
+
+    function ExecFinds(Pattern, startpath:string; useRecurce:boolean; textTofind:string; CallBackFunc:TCallbackEvent):TFindLauncher;stdcall;
+    Begin
+       ExecFinds:= ExecFind(Pattern, startpath, useRecurce, textTofind, CallBackFunc);
+    End;
+
+exports
+  ExecFinds;
 begin
-
-
-
-
 end.

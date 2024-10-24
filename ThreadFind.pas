@@ -8,20 +8,25 @@ uses
 type
  TfindObjet = class(TObject)
  public
-  search:TSearchRec;
+  seaerchrec:TSearchRec;
+  basePath:string;
  end;
 
 type
+  TCallbackEvent = procedure(Sender: TfindObjet) of object;
   TTreadFind = class(TThread)
   private
     { Private declarations }
   protected
-    procedure Execute(); override;
+
   public
      Pattern:string;
      StartPath:string;
      attr:integer;
-     callbackFunctions:TNotifyEvent;
+     callbackFunctions:TCallbackEvent;
+     useRecurse:boolean;
+     Texttofind:string;
+     procedure Execute(); override;
   published
   end;
 
@@ -65,19 +70,23 @@ var founds:TSearchRec;
     simple:TObject;
     findObjet:TfindObjet;
 begin
+  attr := faAnyFile;
   findObjet:=TfindObjet.Create;
+  SetCurrentDir(StartPath);
    try
 
-  if FindFirst(StartPath, attr, founds) = 0 then
+  if FindFirst(StartPath+'\'+Pattern, attr, founds) = 0 then
   Begin
-    findObjet.search := founds;
-    callbackFunctions(findObjet);
-    while ((FindNext(founds)=0) and not CheckTerminated()) do
+       findObjet.seaerchrec:=founds;
+       findObjet.basePath:= StartPath;
+       callbackFunctions(findObjet);
+    while ((FindNext(founds)=0) and not Terminated) do
     Begin
-        findObjet.search := founds;
+        findObjet.seaerchrec:=founds;
+        findObjet.basePath:= StartPath;
         callbackFunctions(findObjet);
     End;
-
+    FindClose(founds);
   End;
   finally
     findObjet.Free;
